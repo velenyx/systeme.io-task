@@ -12,41 +12,27 @@ Dive into the beauty of custom UI components with our NextJS Custom Table Compon
 
 ## 🛠 Tech Stack:
 
+- React: For building user interfaces and handling state.
 - NextJS: For robust server-side rendering and static generation.
 - TailwindCSS: For stylish, responsive design without the bloat.
 - TypeScript: For type safety and scalable application development.
 
 ## Getting Started
 
-First, run the development server:
+Run the following command on your local environment:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/velenyx/systeme.io-task
+cd systeme.io-task
+corepack enable
+yarn set version from sources
+yarn
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Then, you can run the project locally in development mode with live reload by executing:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+yarn dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Open http://localhost:3000 with your favorite browser to see your project.
