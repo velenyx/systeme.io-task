@@ -15,11 +15,13 @@ interface TableProps<T> {
     header: string | JSX.Element;
     accessor: keyof T | ((item: T) => ReactNode);
   }[];
+  children?: ReactNode;
 }
 
-function Table<T>({ data, columns }: TableProps<T>) {
+function Table<T>({ data, columns, children }: TableProps<T>) {
   return (
     <div className="w-full space-y-2.5 overflow-auto">
+      {children}
       <div className="rounded-md border">
         <ShadTable>
           <TableHeader>

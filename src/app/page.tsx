@@ -1,30 +1,29 @@
-import Table from "~/components/table/table";
-import { getProducts } from "~/entities/products/api/get-products";
-import { UpdateProductDialog } from "./update-product-dialog";
+"use client";
 
-export default async function Home() {
-  const products = await getProducts();
+import { useEffect, useState } from "react";
+import { getProducts } from "~/entities/products/api/get-products";
+import { Product } from "~/entities/products/types";
+import { ProductsTable } from "~/products-table";
+
+export default function Home() {
+  const [products, setProducts] = useState<Product[]>([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await getProducts();
+      setProducts(data.data);
+    };
+    fetchData();
+  }, []);
 
   return (
     <section className="container mt-3">
       <h1 className="mb-2 text-2xl font-bold">Products</h1>
-      <Table
-        data={products.data}
-        columns={[
-          { header: "ID", accessor: "id" },
-          { header: "Name", accessor: "name" },
-          { header: "Active", accessor: "active" },
-          { header: "Size", accessor: (item) => item.options.size },
-          {
-            header: "Amount",
-            accessor: (item) => item.options.amount.toLocaleString(),
-          },
-          {
-            header: "Actions",
-            accessor: (product) => <UpdateProductDialog product={product} />,
-          },
-        ]}
-      />
+      {products.length ? (
+        <ProductsTable products={products} />
+      ) : (
+        <p>No products found</p>
+      )}
     </section>
   );
 }
