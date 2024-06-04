@@ -124,7 +124,7 @@ export default function Home() {
           { header: "ID", accessor: "id" },
           { header: "Name", accessor: "name" },
           { header: "Active", accessor: "active" },
-          { header: "Size", accessor: "options.size" },
+          { header: "Size", accessor: (item) => item.options.size },
           {
             header: "Amount",
             accessor: (item) => item.options.amount.toLocaleString(),
