@@ -1,0 +1,46 @@
+name: Frontend checker, will punish for bad code 🪓😵‍💫
+run-name: ${{ github.actor }} is starting sueta at the frontend code ☺️
+
+on:
+  push:
+    branches:
+      - develop
+      - main
+  pull_request:
+    branches:
+      - develop
+      - main
+
+jobs:
+  pipeline:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18.x]
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Node.JS ${{matrix.node-version}}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{matrix.node-version}}
+          cache: 'yarn'
+          cache-dependency-path: ./yarn.lock
+
+      - name: Install yarn and dependencies
+        run: |
+          npm install --global yarn
+          corepack enable
+          yarn set version from sources
+          yarn install --immutable
+
+      - name: Lint and Format
+        run: |
+          yarn lint:ts:check
+          yarn format:check
+
+      - name: Typecheck
+        run: yarn typecheck
+
+      - name: Build project
+        working-directory: ./client
+        run: yarn build
