@@ -1,0 +1,11 @@
+{
+    "*/**/*.{js,jsx,ts,tsx}": [
+        "prettier --write",
+        "eslint --fix",
+        "eslint"
+    ],
+    "**/*.ts?(x)": ["npm run typecheck"],
+    "*/**/*.{json,css,md}": [
+        "prettier --write"
+    ]
+}
