@@ -8,7 +8,7 @@ import { ThemeProvider } from "~/app/providers/theme";
 const fontSans = FontSans({ subsets: ["latin"], variable: "--font-sans" });
 
 export const metadata: Metadata = {
-  title: "Systeme.io Table ⚡",
+  title: "Systeme.io ShadTable ⚡",
   description: "A customizable table component",
 };
 
@@ -31,10 +31,10 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <Header />
-          <main className="flex min-h-screen flex-col items-center justify-between pt-6">
-            {children}
-          </main>
+          <div className="relative flex min-h-screen flex-col">
+            <Header />
+            <main className="flex-1">{children}</main>
+          </div>
         </ThemeProvider>
       </body>
     </html>
