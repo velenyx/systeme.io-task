@@ -123,7 +123,6 @@ export default function Home() {
         columns={[
           { header: "ID", accessor: "id" },
           { header: "Name", accessor: "name" },
-          { header: "Name", accessor: "name" },
           { header: "Active", accessor: "active" },
           { header: "Size", accessor: (item) => item.options.size },
           {
