@@ -1,5 +1,6 @@
 import Table from "~/components/table/table";
 import { getProducts } from "~/entities/products/api/get-products";
+import { UpdateProductDialog } from "./update-product-dialog";
 
 export default async function Home() {
   const products = await getProducts();
@@ -17,6 +18,10 @@ export default async function Home() {
           {
             header: "Amount",
             accessor: (item) => item.options.amount.toLocaleString(),
+          },
+          {
+            header: "Actions",
+            accessor: (product) => <UpdateProductDialog product={product} />,
           },
         ]}
       />

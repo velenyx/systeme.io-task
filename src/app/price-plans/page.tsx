@@ -1,5 +1,6 @@
 import Table from "~/components/table/table";
 import { getPricePlans } from "~/entities/price-plans/api/get-price-plans";
+import { UpdatePricePlanDialog } from "./update-price-plan-dialog";
 
 export default async function PricePlansPage() {
   const pricePlans = await getPricePlans();
@@ -15,6 +16,12 @@ export default async function PricePlansPage() {
           { header: "Active", accessor: "active" },
           { header: "Created At", accessor: "createdAt" },
           { header: "Removed At", accessor: "removedAt" },
+          {
+            header: "Actions",
+            accessor: (pricePlan) => (
+              <UpdatePricePlanDialog pricePlan={pricePlan} />
+            ),
+          },
         ]}
       />
     </section>

@@ -1,5 +1,6 @@
 import Table from "~/components/table/table";
 import { getPages } from "~/entities/pages/api/get-pages";
+import { UpdatePageDialog } from "./update-page-dialog";
 
 export default async function PagesPage() {
   const pages = await getPages();
@@ -15,6 +16,10 @@ export default async function PagesPage() {
           { header: "Active", accessor: "active" },
           { header: "Updated At", accessor: "updatedAt" },
           { header: "Published At", accessor: "publishedAt" },
+          {
+            header: "Actions",
+            accessor: (page) => <UpdatePageDialog page={page} />,
+          },
         ]}
       />
     </section>

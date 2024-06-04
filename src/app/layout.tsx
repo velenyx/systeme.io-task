@@ -4,6 +4,7 @@ import "./globals.css";
 import { cn } from "~/shared/lib/utils";
 import { Header } from "~/components/header";
 import { ThemeProvider } from "~/app/providers/theme";
+import { Toaster } from "~/shared/ui/sonner";
 
 const fontSans = FontSans({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -35,6 +36,7 @@ export default function RootLayout({
             <Header />
             <main className="flex-1">{children}</main>
           </div>
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>
