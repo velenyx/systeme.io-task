@@ -25,12 +25,14 @@ import {
 } from "~/shared/ui/form";
 import { updatePage } from "~/entities/pages/api/update-page";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
   title: z.string().min(2, "Title must be at least 2 characters long"),
 });
 
 export const UpdatePageDialog = ({ page }: { page: Pages }) => {
+  const router = useRouter();
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -43,6 +45,7 @@ export const UpdatePageDialog = ({ page }: { page: Pages }) => {
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     await updatePage(String(page.id), values)
       .then(() => {
+        router.refresh();
         setIsOpen(false);
       })
       .catch((error) => {

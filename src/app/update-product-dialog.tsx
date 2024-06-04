@@ -25,12 +25,14 @@ import {
 import { toast } from "sonner";
 import { Product } from "~/entities/products/types";
 import { updateProduct } from "~/entities/products/api/update-product";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters long"),
 });
 
 export const UpdateProductDialog = ({ product }: { product: Product }) => {
+  const router = useRouter();
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -43,6 +45,7 @@ export const UpdateProductDialog = ({ product }: { product: Product }) => {
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     await updateProduct(String(product.id), values)
       .then(() => {
+        router.refresh();
         setIsOpen(false);
       })
       .catch((error) => {

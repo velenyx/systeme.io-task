@@ -25,6 +25,7 @@ import {
 import { toast } from "sonner";
 import { updatePricePlan } from "~/entities/price-plans/api/update-price-plan";
 import { PricePlan } from "~/entities/price-plans/types";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
   description: z
@@ -37,6 +38,7 @@ export const UpdatePricePlanDialog = ({
 }: {
   pricePlan: PricePlan;
 }) => {
+  const router = useRouter();
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -49,6 +51,7 @@ export const UpdatePricePlanDialog = ({
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     await updatePricePlan(String(pricePlan.id), values)
       .then(() => {
+        router.refresh();
         setIsOpen(false);
       })
       .catch((error) => {
