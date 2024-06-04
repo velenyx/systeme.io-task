@@ -8,7 +8,7 @@ import { ThemeProvider } from "~/app/providers/theme";
 const fontSans = FontSans({ subsets: ["latin"], variable: "--font-sans" });
 
 export const metadata: Metadata = {
-  title: "Systeme.io ShadTable ⚡",
+  title: "Systeme.io Table ⚡",
   description: "A customizable table component",
 };
 
