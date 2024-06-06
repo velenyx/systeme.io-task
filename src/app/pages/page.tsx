@@ -1,27 +1,25 @@
-import Table from "~/components/table/table";
-import { getPages } from "~/entities/pages/api/get-pages";
-import { UpdatePageDialog } from "./update-page-dialog";
+"use client";
 
-export default async function PagesPage() {
-  const pages = await getPages();
+import { getPages } from "~/entities/pages/api/get-pages";
+import { useEffect, useState } from "react";
+import { Pages } from "~/entities/pages/types";
+import { PagesTable } from "./_components/pages-table";
+
+export default function PagesPage() {
+  const [pages, setPages] = useState<Pages[]>([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await getPages();
+      setPages(data.data);
+    };
+    fetchData();
+  }, []);
 
   return (
     <section className="container mt-3">
       <h1 className="mb-2 text-2xl font-bold">Pages</h1>
-      <Table
-        data={pages.data}
-        columns={[
-          { header: "ID", accessor: "id" },
-          { header: "Title", accessor: "title" },
-          { header: "Active", accessor: "active" },
-          { header: "Updated At", accessor: "updatedAt" },
-          { header: "Published At", accessor: "publishedAt" },
-          {
-            header: "Actions",
-            accessor: (page) => <UpdatePageDialog page={page} />,
-          },
-        ]}
-      />
+      {pages.length ? <PagesTable pages={pages} /> : <p>No pages found</p>}
     </section>
   );
 }
