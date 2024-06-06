@@ -7,8 +7,7 @@ WORKDIR /app
 
 COPY package.json yarn.lock .yarnrc.yml ./
 
-RUN corepack enable
-RUN yarn install --immutable
+RUN corepack enable && yarn install --immutable
 
 FROM base AS builder
 WORKDIR /app
@@ -16,9 +15,7 @@ WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
-RUN corepack enable
-
-RUN yarn build
+RUN corepack enable && yarn build
 
 FROM base AS runner
 WORKDIR /app
@@ -29,8 +26,7 @@ RUN adduser --system --uid 1001 nextjs
 
 COPY --from=builder /app/public ./public
 
-RUN mkdir .next
-RUN chown nextjs:nodejs .next
+RUN mkdir .next && chown nextjs:nodejs .next
 
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
