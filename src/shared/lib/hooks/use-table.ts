@@ -2,12 +2,12 @@
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import React, { useCallback, useMemo, useState } from "react";
-import { ColumnDef } from "~/shared/types/table";
+import { ColumnDef, TableFilterField } from "~/shared/types/table";
 
 interface DataTableProps<T> {
   data: T[];
   columns: ColumnDef<T>[];
-  filterFields: any[];
+  filterFields: TableFilterField<T>[];
 }
 
 export const useTable = <T>({
@@ -30,17 +30,18 @@ export const useTable = <T>({
 
   // Функция для установки или обновления фильтров
   const setFilter = useCallback(
-    (field: keyof T | string, value: string) => {
+    (field: keyof T | string, value: string | string[]) => {
       const newSearchParams = new URLSearchParams(searchParams);
-      value ? newSearchParams.set(field, value) : newSearchParams.delete(field);
-      if (value) {
-        newSearchParams.set(field, value);
-        setFilters((prev) => ({ ...prev, [field]: value }));
+      const valueString = Array.isArray(value) ? value.join(",") : value;
+
+      if (valueString) {
+        newSearchParams.set(String(field), valueString);
+        setFilters((prev) => ({ ...prev, [field]: valueString }));
       } else {
-        newSearchParams.delete(field);
+        newSearchParams.delete(String(field));
         setFilters((prev) => {
           const newFilters = { ...prev };
-          delete newFilters[field];
+          delete newFilters[field as string];
           return newFilters;
         });
       }
@@ -57,21 +58,31 @@ export const useTable = <T>({
     [setFilter],
   );
 
+  const resetAllFilters = useCallback(() => {
+    setFilters({});
+    router.push(pathname);
+  }, [router, pathname]);
+
   // Применение фильтров к данным
   const filteredData = useMemo(
     () =>
       data.filter((item) =>
         filterFields?.every((field) => {
-          const itemValue =
-            typeof field.value === "string"
-              ? item[field.value as keyof T]
-              : item[field.value];
+          const itemValue = item[field.value as keyof T];
           const filterValue = filters[field.value as string];
-          return filterValue
-            ? String(itemValue)
-                .toLowerCase()
-                .includes(filterValue.toLowerCase())
-            : true;
+
+          if (!filterValue) {
+            return true; // No filter applied for this field
+          }
+
+          const filterValues =
+            typeof filterValue === "string"
+              ? filterValue.split(",")
+              : filterValue;
+
+          return filterValues.some((fv) =>
+            String(itemValue).toLowerCase().includes(fv.toLowerCase()),
+          );
         }),
       ),
     [data, filterFields, filters],
@@ -83,6 +94,7 @@ export const useTable = <T>({
       columns,
       filters,
       setFilter,
+      resetAllFilters,
       resetFilter,
       searchableColumns,
       filterableColumns,

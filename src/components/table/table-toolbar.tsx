@@ -1,44 +1,53 @@
 import { Input } from "~/shared/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "~/shared/ui/select";
+import { Button } from "~/shared/ui/button";
+import { Cross2Icon } from "@radix-ui/react-icons";
+import { TableFilter } from "~/components/table/table-filter";
 
-export const TableToolbar = ({ table }: { table: any }) => {
+interface TableToolbarProps<T> extends React.HTMLAttributes<HTMLDivElement> {
+  table: any;
+}
+
+export const TableToolbar = <T extends any>({
+  table,
+  children,
+}: TableToolbarProps<T>) => {
+  const isFiltered = Object.keys(table.filters).length > 0;
+
   return (
-    <>
-      {table.searchableColumns.map((field) => (
-        <Input
-          key={field.value}
-          placeholder={field.placeholder}
-          value={table.filters[field.value] || ""}
-          onChange={(e) => table.setFilter(field.value, e.target.value)}
-        />
-      ))}
-      {table.filterableColumns.map((field) => {
-        console.log(field);
-        return (
-          <Select
-            key={field.value}
-            onValueChange={(value) => table.setFilter(field.value, value)}
+    <div className="flex w-full items-center justify-between space-x-2 overflow-auto p-1">
+      <div className="flex flex-1 items-center space-x-2">
+        {table.searchableColumns.map((field) => (
+          <Input
+            key={field.value + "input"}
+            placeholder={field.placeholder}
+            value={table.filters[field.value] || ""}
+            onChange={(e) => table.setFilter(field.value, e.target.value)}
+            className="h-8 w-40 lg:w-64"
+          />
+        ))}
+        {table.filterableColumns.length > 0 &&
+          table.filterableColumns.map((field) => (
+            <TableFilter
+              key={String(field.value) + "filter"}
+              columnKey={field.value}
+              table={table}
+              title={field.label}
+              options={field.options ?? []}
+            />
+          ))}
+        {isFiltered && (
+          <Button
+            aria-label="Reset filters"
+            variant="ghost"
+            className="h-8 px-2 lg:px-3"
+            onClick={() => table.resetAllFilters()}
           >
-            <SelectTrigger>
-              <SelectValue placeholder="Select" />
-            </SelectTrigger>
-            <SelectContent>
-              {field.options.map((option) => (
-                <SelectItem key={option.value} value={option.value}>
-                  {option.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        );
-      })}
-      {/*<button onClick={() => table.resetFilter()}>Reset Filters</button>*/}
-    </>
+            Reset
+            <Cross2Icon className="ml-2 size-4" aria-hidden="true" />
+          </Button>
+        )}
+      </div>
+      <div className="flex items-center gap-2">{children}</div>
+    </div>
   );
 };

@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { getProducts } from "~/entities/products/api/get-products";
 import { Product } from "~/entities/products/types";
-import { ProductsTable } from "~/products-table";
+import { ProductsTable } from "./products-table";
 
 export default function Home() {
   const [products, setProducts] = useState<Product[]>([]);
