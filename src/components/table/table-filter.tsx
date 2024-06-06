@@ -14,20 +14,21 @@ import {
 import { Popover, PopoverContent, PopoverTrigger } from "~/shared/ui/popover";
 import { Separator } from "~/shared/ui/separator";
 import { Option } from "~/shared/types/table";
+import { ITable } from "~/shared/lib/hooks/use-table";
 
-interface TableFilterProps<TData, TValue> {
+interface TableFilterProps<T> {
   title?: string;
   options: Option[];
   columnKey: string;
-  table: any;
+  table: ITable<T>;
 }
 
-export function TableFilter<TData, TValue>({
+export function TableFilter<T>({
   title,
   options,
   table,
   columnKey,
-}: TableFilterProps<TData, TValue>) {
+}: TableFilterProps<T>) {
   const selectedValues = new Set(
     table.filters[columnKey] ? table.filters[columnKey].split(",") : [],
   );

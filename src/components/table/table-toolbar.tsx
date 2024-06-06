@@ -2,9 +2,10 @@ import { Input } from "~/shared/ui/input";
 import { Button } from "~/shared/ui/button";
 import { Cross2Icon } from "@radix-ui/react-icons";
 import { TableFilter } from "~/components/table/table-filter";
+import { ITable } from "~/shared/lib/hooks/use-table";
 
 interface TableToolbarProps<T> extends React.HTMLAttributes<HTMLDivElement> {
-  table: any;
+  table: ITable<T>;
 }
 
 export const TableToolbar = <T extends any>({
@@ -18,9 +19,9 @@ export const TableToolbar = <T extends any>({
       <div className="flex flex-1 items-center space-x-2">
         {table.searchableColumns.map((field) => (
           <Input
-            key={field.value + "input"}
+            key={String(field.value) + "input"}
             placeholder={field.placeholder}
-            value={table.filters[field.value] || ""}
+            value={table.filters[String(field.value)] || ""}
             onChange={(e) => table.setFilter(field.value, e.target.value)}
             className="h-8 w-40 lg:w-64"
           />
@@ -29,7 +30,7 @@ export const TableToolbar = <T extends any>({
           table.filterableColumns.map((field) => (
             <TableFilter
               key={String(field.value) + "filter"}
-              columnKey={field.value}
+              columnKey={String(field.value)}
               table={table}
               title={field.label}
               options={field.options ?? []}

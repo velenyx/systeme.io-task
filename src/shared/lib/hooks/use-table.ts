@@ -4,6 +4,17 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import React, { useCallback, useMemo, useState } from "react";
 import { ColumnDef, TableFilterField } from "~/shared/types/table";
 
+export interface ITable<T> {
+  data: T[];
+  columns: ColumnDef<T>[];
+  filters: Record<string, string>;
+  setFilter: (field: keyof T | string, value: string | string[]) => void;
+  resetAllFilters: () => void;
+  resetFilter: (field: keyof T | string) => void;
+  searchableColumns: TableFilterField<T>[];
+  filterableColumns: TableFilterField<T>[];
+}
+
 interface DataTableProps<T> {
   data: T[];
   columns: ColumnDef<T>[];

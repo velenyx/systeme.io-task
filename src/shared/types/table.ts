@@ -5,9 +5,9 @@ export interface Option {
   value: string;
 }
 
-export interface TableFilterField<TData> {
+export interface TableFilterField<T> {
   label: string;
-  value: keyof TData;
+  value: keyof T;
   placeholder?: string;
   options?: Option[];
 }
