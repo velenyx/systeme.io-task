@@ -1,29 +1,29 @@
-import Table from "~/components/table/table";
-import { getPricePlans } from "~/entities/price-plans/api/get-price-plans";
-import { UpdatePricePlanDialog } from "./update-price-plan-dialog";
+"use client";
 
-export default async function PricePlansPage() {
-  const pricePlans = await getPricePlans();
+import { getPricePlans } from "~/entities/price-plans/api/get-price-plans";
+import { useEffect, useState } from "react";
+import { PricePlan } from "~/entities/price-plans/types";
+import { PricePlanTable } from "./_components/price-plan-table";
+
+export default function PricePlansPage() {
+  const [pricePlans, setPricePlans] = useState<PricePlan[]>([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await getPricePlans();
+      setPricePlans(data.data);
+    };
+    fetchData();
+  }, []);
 
   return (
     <section className="container mt-3">
       <h1 className="mb-2 text-2xl font-bold">Price Plans</h1>
-      <Table
-        data={pricePlans.data}
-        columns={[
-          { header: "ID", accessor: "id" },
-          { header: "Description", accessor: "description" },
-          { header: "Active", accessor: "active" },
-          { header: "Created At", accessor: "createdAt" },
-          { header: "Removed At", accessor: "removedAt" },
-          {
-            header: "Actions",
-            accessor: (pricePlan) => (
-              <UpdatePricePlanDialog pricePlan={pricePlan} />
-            ),
-          },
-        ]}
-      />
+      {pricePlans.length ? (
+        <PricePlanTable pricePlans={pricePlans} />
+      ) : (
+        <p>No price plan found</p>
+      )}
     </section>
   );
 }
