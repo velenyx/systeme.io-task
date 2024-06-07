@@ -12,8 +12,7 @@ Dive into the beauty of custom UI components with our NextJS Custom Table Compon
 - ✅ Filtering data (via `useTable` hook)
 - ✅ Dynamic debounced search filters, and faceted filters (`filterFields` prop)
 - ✅ Dynamic `Table-Toolbar` with search, filters
-
-
+---
 - ⚡ [Next.js](https://nextjs.org) with App Router support
 - 🔥 Type checking [TypeScript](https://www.typescriptlang.org)
 - 💎 Integrate with [Tailwind CSS](https://tailwindcss.com)
@@ -85,6 +84,26 @@ Open http://localhost:3000 with your favorite browser to see your project.
 ├── tailwind.config.ts              # Tailwind CSS configuration
 └── tsconfig.json                   # TypeScript configuration
 ```
+
+## 🧞 Commands
+
+All commands are run from the root of the project, from a terminal:
+
+| Command                          | Action                                            |
+| :------------------------------- |:--------------------------------------------------|
+| `corepack enable`                | Enables Corepack to manage package managers       |
+| `yarn set version from sources`  | Sets Yarn to the latest version from sources      |
+| `yarn install`                   | Installs dependencies                             |
+| `yarn dev`                       | Starts the development server at `localhost:3000` |
+| `yarn build`                     | Builds the application for production usage       |
+| `yarn start`                     | Starts a Node.js server for the production build  |
+| `yarn lint`                      | Runs the linter on the project files              |
+| `yarn lint:ts:check`             | Checks ESLint errors                              |
+| `yarn lint:ts:fix`               | Fixes ESLint issues                               |
+| `yarn format:check`              | Checks formatting rules on all files              |
+| `yarn format:fix`                | Applies formatting rules to all files             |
+| `yarn typecheck`                 | Performs a type check on TypeScript files         |
+| `yarn prepare`                   | Sets up Husky for git hooks                       |
 
 ### ⭐ Show Your Support
 If this test project has helped or inspired you, please consider giving it a 💫 on GitHub. Or, if you simply liked it, a star is also much appreciated!
