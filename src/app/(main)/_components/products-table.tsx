@@ -1,3 +1,5 @@
+"use client";
+
 import { Product } from "~/entities/products/types";
 import { useTable } from "~/shared/lib/hooks/use-table";
 import Table from "~/components/table/table";

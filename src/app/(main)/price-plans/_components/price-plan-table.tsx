@@ -1,3 +1,5 @@
+"use client";
+
 import { useTable } from "~/shared/lib/hooks/use-table";
 import Table from "~/components/table/table";
 import { TableFilterField } from "~/shared/types/table";
