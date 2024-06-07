@@ -5,3 +5,4 @@ node_modules
 public
 next-env.d.ts
 yarn.lock
+README.md
