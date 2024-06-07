@@ -39,7 +39,6 @@ export const useTable = <T>({
     };
   }, [filterFields]);
 
-  // Функция для установки или обновления фильтров
   const setFilter = useCallback(
     (field: keyof T | string, value: string | string[]) => {
       const newSearchParams = new URLSearchParams(searchParams);
@@ -61,7 +60,6 @@ export const useTable = <T>({
     [searchParams],
   );
 
-  // Функция для сброса фильтра
   const resetFilter = useCallback(
     (field: keyof T | string) => {
       setFilter(field, "");
@@ -74,7 +72,6 @@ export const useTable = <T>({
     router.push(pathname);
   }, [router, pathname]);
 
-  // Применение фильтров к данным
   const filteredData = useMemo(
     () =>
       data.filter((item) =>
@@ -83,7 +80,7 @@ export const useTable = <T>({
           const filterValue = filters[field.value as string];
 
           if (!filterValue) {
-            return true; // No filter applied for this field
+            return true;
           }
 
           const filterValues =
